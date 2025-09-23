@@ -1,0 +1,42 @@
+@startuml
+
+class Person{
+    name : String
+    birthDate : Date    
+    hobbies : List<Hobby>
+    events : List<Event>
+    amigos : List<Person>
+
+    addHobby(hobby : Hobby) : void
+    addFriend(friend : Person) : void
+    addEvent(event : Event) : void  
+    inivteFriendToEvent(friend : Person, event : Event) : void
+}
+
+Class Hobby{
+    name : String
+    description : String
+
+}
+
+Class Event{
+    name : String
+    date : Date
+    location : String
+    startHour : Time
+    endHour : Time
+    status: enum {PLANNED, CANCELLED, DONE}
+    subEvents : List<Event>
+}
+
+
+Person "1" --> "0..*" Hobby : tiene >
+Person "1" --> "0..*" Event : participa >
+Person "1" --> "0..*" Person : amigos >
+
+
+
+Event "1" --> "1" Hobby : relacionadoCon >
+Event "1" --> "0..*" Event : subEventoDe >
+
+@enduml
