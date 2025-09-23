@@ -16,7 +16,6 @@ public class FriendshipService {
         this.eventNeoRepository = eventNeoRepository;
     }
 
-    // Crear amistad unidireccional
     public void addFriend(Long personId, Long friendId) {
         PersonNode person = personNeoRepository.findById(personId).orElseThrow();
         PersonNode friend = personNeoRepository.findById(friendId).orElseThrow();
@@ -25,7 +24,6 @@ public class FriendshipService {
         personNeoRepository.save(person);
     }
 
-    // Vincular persona a evento
     public void addPersonToEvent(Long personId, Long eventId) {
         PersonNode person = personNeoRepository.findById(personId).orElseThrow();
         EventNode event = eventNeoRepository.findById(eventId).orElseThrow();
@@ -34,15 +32,12 @@ public class FriendshipService {
         personNeoRepository.save(person);
     }
 
-    // Invitar amigos con el mismo hobby (simplificado)
     public void inviteFriendsToEvent(Long personId, Long eventId, List<String> hobbiesOfPerson) {
         PersonNode person = personNeoRepository.findById(personId).orElseThrow();
         EventNode event = eventNeoRepository.findById(eventId).orElseThrow();
 
         for (PersonNode friend : person.getFriends()) {
-            // 🚨 Aquí deberíamos comparar hobbies entre ambos
-            // De momento asumimos que ya tenemos una lista de hobbies del amigo
-            List<String> hobbiesOfFriend = List.of("deporte", "cine"); // ejemplo hardcoded
+            List<String> hobbiesOfFriend = List.of("deporte", "cine");
 
             boolean shareHobby = hobbiesOfFriend.stream().anyMatch(hobbiesOfPerson::contains);
             if (shareHobby) {

@@ -12,11 +12,9 @@ public class PersonNode {
 
     private String name;
 
-    // Relación unidireccional de amigos
     @Relationship(type = "FRIEND_OF", direction = Relationship.Direction.OUTGOING)
     private List<PersonNode> friends = new ArrayList<>();
 
-    // Relación con eventos
     @Relationship(type = "PARTICIPATES_IN", direction = Relationship.Direction.OUTGOING)
     private List<EventNode> events = new ArrayList<>();
 
@@ -27,7 +25,7 @@ public class PersonNode {
         this.name = name;
     }
 
-    
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
