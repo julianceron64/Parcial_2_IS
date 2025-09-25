@@ -18,6 +18,7 @@ public class PersonController {
 
     @RequestMapping("/persons")
     public String listPersons(Model model) {
+        // Trae todas las personas y las envía a la vista
         model.addAttribute("persons", personService.findAll());
         return "persons"; // persons.html en templates
     }
@@ -25,12 +26,12 @@ public class PersonController {
     @GetMapping("/persons/create")
     public String showForm(Model model) {
         model.addAttribute("person", new Person());
-        return "formPerson"; // formulario
+        return "PersonForm";
     }
 
     @PostMapping("/persons/save")
-    public String savePerson(Person person) {
-        personService.save(person);
+    public String savePerson(@ModelAttribute Person person) {
+        personService.savePerson(person.getName(),person.getBirthDate(), person.getHobbyIds());
         return "redirect:/persons";
     }
 }

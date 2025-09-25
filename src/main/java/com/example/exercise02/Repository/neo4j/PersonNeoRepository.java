@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface PersonNeoRepository extends Neo4jRepository<PersonNode, Long> {
 
-    Optional<PersonNode> findByName(String name);
+   PersonNode findByName(String name);
 
     @Query("MATCH (p:Person)-[:FRIEND_OF]->(f:Person) WHERE p.name = $name RETURN f")
     List<PersonNode> findFriendsByName(String name);

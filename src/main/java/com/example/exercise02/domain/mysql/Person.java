@@ -12,6 +12,7 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
 
     @Column(name = "birth_date", nullable = false)
@@ -24,6 +25,7 @@ public class Person {
     )
     @Column(name = "hobby_id")
     private List<String> hobbyIds = new ArrayList<>();
+
     private Long neo4jNodeId;
 
     @ManyToMany
@@ -34,6 +36,7 @@ public class Person {
     )
     private List<Event> events = new ArrayList<>();
 
+    // --- Getters y setters ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -48,4 +51,7 @@ public class Person {
 
     public Long getNeo4jNodeId() { return neo4jNodeId; }
     public void setNeo4jNodeId(Long neo4jNodeId) { this.neo4jNodeId = neo4jNodeId; }
+
+    public List<Event> getEvents() { return events; }
+    public void setEvents(List<Event> events) { this.events = events; }
 }
