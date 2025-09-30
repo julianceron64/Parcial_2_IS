@@ -1,10 +1,14 @@
 -- Tabla persons
 CREATE TABLE persons (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    global_id CHAR(36) NOT NULL UNIQUE,
     name VARCHAR(100) NOT NULL,
     birth_date DATE NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    phone VARCHAR(20) NOT NULL UNIQUE,
     neo4j_node_id BIGINT
 );
+
 
 CREATE TABLE person_hobby_ids (
     person_id BIGINT NOT NULL,

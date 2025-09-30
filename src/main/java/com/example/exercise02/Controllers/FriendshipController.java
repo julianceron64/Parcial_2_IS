@@ -1,13 +1,15 @@
 package com.example.exercise02.Controllers;
 
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.exercise02.Services.FriendshipService;
 
 import java.util.List;
+import java.util.UUID;
 
-@RestController
+@Controller
 @RequestMapping("/friendships")
 public class FriendshipController {
 
@@ -17,26 +19,24 @@ public class FriendshipController {
         this.friendshipService = friendshipService;
     }
 
-    // Crear amistad
-    @PostMapping("/{personId}/addFriend/{friendId}")
-    public String addFriend(@PathVariable Long personId, @PathVariable Long friendId) {
-        friendshipService.addFriend(personId, friendId);
-        return "Amistad creada";
+    @PostMapping("/add")
+    public String addFriend(
+            @RequestParam("personGlobalId") String personGlobalId,
+            @RequestParam("friendEmail") String friendEmail,
+            @RequestParam("friendPhone") String friendPhone
+    ) {
+        System.out.println(">> personGlobalId recibido: '" + personGlobalId + "' (length=" + personGlobalId.length() + ")");
+        // Llamamos al servicio
+        friendshipService.addFriend(UUID.fromString(personGlobalId), friendEmail, friendPhone);
+
+        // Redirigimos al listado de personas
+        return "redirect:/persons";
     }
 
-    // Participar en un evento
-    @PostMapping("/{personId}/joinEvent/{eventId}")
-    public String joinEvent(@PathVariable Long personId, @PathVariable Long eventId) {
-        friendshipService.addPersonToEvent(personId, eventId);
-        return "Persona añadida al evento";
+    @GetMapping
+    public String showGraph() {
+        return "graph"; // Carga templates/graph.html
     }
 
-    // Invitar amigos con hobbies comunes
-    @PostMapping("/{personId}/invite/{eventId}")
-    public String inviteFriends(@PathVariable Long personId,
-                                @PathVariable Long eventId,
-                                @RequestBody List<String> hobbies) {
-        friendshipService.inviteFriendsToEvent(personId, eventId, hobbies);
-        return "Amigos invitados";
-    }
 }
+

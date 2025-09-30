@@ -11,8 +11,9 @@ public class PersonNode {
     private Long id;
 
     private String name;
+    private String globalId;
 
-    @Relationship(type = "FRIEND_OF", direction = Relationship.Direction.OUTGOING)
+    @Relationship(type = "FRIEND_WITH", direction = Relationship.Direction.OUTGOING)
     private List<PersonNode> friends = new ArrayList<>();
 
     @Relationship(type = "PARTICIPATES_IN", direction = Relationship.Direction.OUTGOING)
@@ -25,6 +26,13 @@ public class PersonNode {
         this.name = name;
     }
 
+    public String getGlobalId() {
+        return globalId;
+    }
+
+    public void setGlobalId(String globalId) {
+        this.globalId = globalId;
+    }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

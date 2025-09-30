@@ -19,18 +19,7 @@ public class HobbyController {
     @RequestMapping("/hobbies")
     public String listHobbies(Model model) {
         model.addAttribute("hobbies", hobbyService.findAll());
-        return "hobbies"; // hobbies.html en templates
+        return "hobbies";
     }
 
-    @GetMapping("/hobbies/create")
-    public String showForm(Model model) {
-        model.addAttribute("hobby", new Hobby());
-        return "formHobby"; // formulario para hobby
-    }
-
-    @PostMapping("/hobbies/save")
-    public String saveHobby(Hobby hobby) {
-        hobbyService.save(hobby);
-        return "redirect:/hobbies";
-    }
 }

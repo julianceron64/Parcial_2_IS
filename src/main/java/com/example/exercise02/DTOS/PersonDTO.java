@@ -5,25 +5,32 @@ import java.util.List;
 import java.util.UUID;
 
 public class PersonDTO {
-    private UUID id;          // ID global
+    private UUID globalId;
     private String name;
+    private String email;
+    private String phone;
     private LocalDate birthDate;
-    private List<String> hobbyIds;
-    private List<String> eventIds;
+    private List<Long> hobbyIds;
+    private List<Long> eventIds;
 
-
-    public UUID getId() { return id; }
-    public void setId(UUID id) { this.id = id; }
+    public UUID getGlobalId() { return globalId; }
+    public void setGlobalId(UUID globalId) { this.globalId = globalId; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+
     public LocalDate getBirthDate() { return birthDate; }
     public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
 
-    public List<String> getHobbyIds() { return hobbyIds; }
-    public void setHobbyIds(List<String> hobbyIds) { this.hobbyIds = hobbyIds; }
+    public List<Long> getHobbyIds() { return hobbyIds; }
+    public void setHobbyIds(List<Long> hobbyIds) { this.hobbyIds = hobbyIds; }
 
-    public List<String> getEventIds() { return eventIds; }
-    public void setEventIds(List<String> eventIds) { this.eventIds = eventIds; }
+    public List<Long> getEventIds() { return eventIds; }
+    public void setEventIds(List<Long> eventIds) { this.eventIds = eventIds; }
 }

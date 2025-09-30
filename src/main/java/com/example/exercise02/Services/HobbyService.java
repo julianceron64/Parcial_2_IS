@@ -1,9 +1,9 @@
 package com.example.exercise02.Services;
 
-import com.example.exercise02.Repository.mongo.HobbyRepository;
-import com.example.exercise02.domain.mongo.Hobby;
-
+import com.example.exercise02.Repository.mysql.HobbyRepository;
+import com.example.exercise02.domain.mysql.Hobby;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -19,7 +19,4 @@ public class HobbyService {
         return hobbyRepository.findAll();
     }
 
-    public Hobby save(Hobby hobby) {
-        return hobbyRepository.save(hobby);
-    }
 }

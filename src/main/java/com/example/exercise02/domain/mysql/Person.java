@@ -1,9 +1,11 @@
 package com.example.exercise02.domain.mysql;
 
+import com.example.exercise02.domain.mysql.Hobby;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "persons")
@@ -13,20 +15,35 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "global_id", nullable = false, unique = true)
+    private String globalId;
+
     private String name;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false, unique = true)
+    private String phone;
 
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @ElementCollection
-    @CollectionTable(
+    @ManyToMany
+    @JoinTable(
             name = "person_hobbies",
-            joinColumns = @JoinColumn(name = "person_id")
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "hobby_id")
     )
-    @Column(name = "hobby_id")
-    private List<String> hobbyIds = new ArrayList<>();
+    private List<Hobby> hobbies = new ArrayList<>();
 
-    private Long neo4jNodeId;
+    @ManyToMany
+    @JoinTable(
+            name = "person_friends",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private List<Person> friends = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -35,6 +52,7 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "event_id")
     )
     private List<Event> events = new ArrayList<>();
+
 
     // --- Getters y setters ---
     public Long getId() { return id; }
@@ -46,12 +64,46 @@ public class Person {
     public LocalDate getBirthDate() { return birthDate; }
     public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
 
-    public List<String> getHobbyIds() { return hobbyIds; }
-    public void setHobbyIds(List<String> hobbyIds) { this.hobbyIds = hobbyIds; }
-
-    public Long getNeo4jNodeId() { return neo4jNodeId; }
-    public void setNeo4jNodeId(Long neo4jNodeId) { this.neo4jNodeId = neo4jNodeId; }
-
     public List<Event> getEvents() { return events; }
     public void setEvents(List<Event> events) { this.events = events; }
+
+    public String getGlobalId() {
+        return globalId;
+    }
+
+    public void setGlobalId(String globalId) {
+        this.globalId = globalId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<Hobby> getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(List<Hobby> hobbies) {
+        this.hobbies = hobbies;
+    }
+
+    public List<Person> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Person> friends) {
+        this.friends = friends;
+    }
 }

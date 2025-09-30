@@ -5,11 +5,14 @@ import com.example.exercise02.adapters.NeoPersonAdapter;
 import com.example.exercise02.Repository.mongo.PersonMongoRepository;
 import com.example.exercise02.domain.mongo.PersonDocument;
 import com.example.exercise02.domain.mysql.Person;
+import com.example.exercise02.domain.mysql.Hobby;
+import com.example.exercise02.Repository.mysql.HobbyRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PersonService {
@@ -28,26 +31,34 @@ public class PersonService {
         this.mongoRepo = mongoRepo;
     }
 
-    public void savePerson(String name, LocalDate birthDate, List<String> hobbyIds) {
+    public void savePerson(String name, String email, String phoneNumber, LocalDate birthDate, List<Long> hobbyIds) {
+        UUID globalId = UUID.randomUUID();
+
+        // 1. Guardar en Mongo
         PersonDocument mongoPerson = new PersonDocument();
+        mongoPerson.setGlobalId(globalId);
         mongoPerson.setName(name);
+        mongoPerson.setEmail(email);
+        mongoPerson.setPhone(phoneNumber);
         mongoPerson.setBirthDate(birthDate);
         mongoPerson.setHobbies(hobbyIds);
         mongoRepo.save(mongoPerson);
 
-        savePersonInSql(name, birthDate, hobbyIds);
+        // 2. Guardar en MySQL
+        savePersonInSql(globalId.toString(), name, email, phoneNumber, birthDate, hobbyIds);
 
-        savePersonInNeo(name);
+        // 3. Guardar en Neo4j
+        savePersonInNeo(globalId.toString(), name);
     }
 
     @Transactional("jpaTransactionManager")
-    public void savePersonInSql(String name, LocalDate birthDate, List<String> hobbyIds) {
-        sqlAdapter.savePerson(name, birthDate, hobbyIds);
+    public void savePersonInSql(String globalId, String name, String email, String phoneNumber, LocalDate birthDate, List<Long> hobbyIds) {
+        sqlAdapter.savePerson(globalId, name, email, phoneNumber, birthDate, hobbyIds);
     }
 
     @Transactional("neo4jTransactionManager")
-    public void savePersonInNeo(String name) {
-        neoAdapter.savePerson(name, null, List.of());
+    public void savePersonInNeo(String globalId, String name) {
+        neoAdapter.savePerson(globalId, name, null, null, null, List.of());
     }
 
     public List<Person> findAll() {

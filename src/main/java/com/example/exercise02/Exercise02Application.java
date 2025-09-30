@@ -8,9 +8,6 @@ import com.example.exercise02.domain.mysql.Person;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Component;
-import java.time.LocalDate;
-import java.util.List;
 
 @SpringBootApplication
 public class Exercise02Application {
