@@ -38,6 +38,11 @@ public class PersonController {
                 });
     }
 
+    @RequestMapping()
+    public String main() {
+        return "Main";
+    }
+
     @RequestMapping("/persons")
     public String listPersons(Model model) {
         model.addAttribute("persons", personService.findAll());

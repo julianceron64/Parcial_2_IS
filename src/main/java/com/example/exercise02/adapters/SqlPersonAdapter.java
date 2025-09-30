@@ -3,6 +3,8 @@ package com.example.exercise02.adapters;
 import com.example.exercise02.Repository.mysql.EventRepository;
 import com.example.exercise02.Repository.mysql.HobbyRepository;
 import com.example.exercise02.Repository.mysql.PersonRepository;
+import com.example.exercise02.domain.mysql.Event;
+import com.example.exercise02.domain.mysql.EventStatus;
 import com.example.exercise02.domain.mysql.Hobby;
 import com.example.exercise02.domain.mysql.Person;
 import org.springframework.stereotype.Component;
@@ -79,7 +81,23 @@ public class SqlPersonAdapter implements PersonTarget {
         personRepository.save(p2);
     }
 
+    @Override
+    public void addEvent(String globalId,String name, String location, LocalDate date) {
+        Event event = new Event();
+        event.setGlobalId(globalId);
+        event.setName(name);
+        event.setLocation(location);
+        event.setDate(date);
+        event.setStatus(EventStatus.PLANNED);
+
+        eventRepository.save(event);
+    }
+
     public List<Person> findAll() {
         return personRepository.findAll();
+    }
+
+    public List<Event> findAllEvents() {
+        return eventRepository.findAll();
     }
 }

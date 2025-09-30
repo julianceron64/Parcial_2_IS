@@ -34,7 +34,6 @@ public class PersonService {
     public void savePerson(String name, String email, String phoneNumber, LocalDate birthDate, List<Long> hobbyIds) {
         UUID globalId = UUID.randomUUID();
 
-        // 1. Guardar en Mongo
         PersonDocument mongoPerson = new PersonDocument();
         mongoPerson.setGlobalId(globalId);
         mongoPerson.setName(name);
@@ -44,10 +43,8 @@ public class PersonService {
         mongoPerson.setHobbies(hobbyIds);
         mongoRepo.save(mongoPerson);
 
-        // 2. Guardar en MySQL
         savePersonInSql(globalId.toString(), name, email, phoneNumber, birthDate, hobbyIds);
 
-        // 3. Guardar en Neo4j
         savePersonInNeo(globalId.toString(), name);
     }
 

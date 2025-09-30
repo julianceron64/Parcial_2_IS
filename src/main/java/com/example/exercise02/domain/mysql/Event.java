@@ -13,6 +13,9 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "global_id", nullable = false, unique = true)
+    private String globalId;
+
     private String name;
 
     private LocalDate date;
@@ -39,6 +42,14 @@ public class Event {
 
     public EventStatus getStatus() { return status; }
     public void setStatus(EventStatus status) { this.status = status; }
+
+    public void setGlobalId(String globalId) {
+        this.globalId = globalId;
+    }
+
+    public String getGlobalId() {
+        return globalId;
+    }
 
     public List<Person> getParticipants() { return participants; }
     public void setParticipants(List<Person> participants) { this.participants = participants; }

@@ -12,6 +12,7 @@ public class EventNode {
 
     private String name;
 
+    private String globalId;
    
     @Relationship(type = "PARTICIPATES_IN", direction = Relationship.Direction.INCOMING)
     private List<PersonNode> participants = new ArrayList<>();
@@ -29,6 +30,14 @@ public class EventNode {
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    public void setGlobalId(String globalId) {
+        this.globalId = globalId;
+    }
+
+    public String getGlobalId() {
+        return globalId;
+    }
 
     public List<PersonNode> getParticipants() { return participants; }
     public void setParticipants(List<PersonNode> participants) { this.participants = participants; }

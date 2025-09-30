@@ -2,6 +2,7 @@ package com.example.exercise02.adapters;
 
 import com.example.exercise02.Repository.neo4j.EventNeoRepository;
 import com.example.exercise02.Repository.neo4j.PersonNeoRepository;
+import com.example.exercise02.domain.mysql.Event;
 import com.example.exercise02.domain.neo4j.EventNode;
 import com.example.exercise02.domain.neo4j.PersonNode;
 import org.springframework.stereotype.Component;
@@ -24,12 +25,9 @@ public class NeoPersonAdapter implements PersonTarget {
 
     @Override
     public void savePerson(String globalId, String name, String email, String phoneNumber, LocalDate birthDate, List<Long> hobbyIds) {
-        // Solo guardamos lo esencial en Neo4j
         PersonNode node = new PersonNode();
         node.setGlobalId(globalId);
         node.setName(name);
-
-        // relaciones de hobbies y birthDate no se modelan en Neo4j aquí
         personNeoRepository.save(node);
     }
 
@@ -41,6 +39,14 @@ public class NeoPersonAdapter implements PersonTarget {
     @Override
     public void createFriendship(String globalId1, String globalId2) {
         personNeoRepository.createFriendship(globalId1, globalId2);
+    }
+
+    @Override
+    public void addEvent(String globalId, String name, String location, LocalDate date) {
+        EventNode node = new EventNode();
+        node.setGlobalId(globalId);
+        node.setName(name);
+        eventNeoRepository.save(node);
     }
 
    /*
